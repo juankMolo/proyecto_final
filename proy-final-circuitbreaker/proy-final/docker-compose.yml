@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - proy-network
+
+  microusers:
+    build: ./microusers
+    ports:
+      - "8081:8081"
+    networks:
+      - proy-network
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - proy-network
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - proy-network
+
+networks:
+  proy-network:
+    driver: bridge
