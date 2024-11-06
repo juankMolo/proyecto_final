@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  microusers:
+    image: jpeca79/microusers:latest
+    container_name: microusers
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+
+  frontend:
+    image: jpeca79/frontend:latest
+    container_name: frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
